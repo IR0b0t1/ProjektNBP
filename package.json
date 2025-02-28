@@ -22,6 +22,7 @@
     "@sveltejs/kit": "^2.17.1",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
+    "git": "^0.1.5",
     "svelte-spa-router": "^4.0.1"
   },
   "description": "projekcik",
