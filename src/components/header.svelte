@@ -4,7 +4,7 @@
 </script>
 
 <nav class="nav-top">
-  <p>WIP</p>
+  <a href="/ExchangeRate" style="color: white;">ExchangeRate</a>
 </nav>
 
 <style>
