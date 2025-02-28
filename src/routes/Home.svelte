@@ -2,82 +2,11 @@
   import { push } from "svelte-spa-router";
   import { onMount } from "svelte";
 
-  let games = [];
-  let nextPageUrl = null;
-  let prevPageUrl = null;
-  let currentPage = 1;
-
-  function getUrlForPage(page) {
-    return `https://api.rawg.io/api/games?key=de4d513680fd4e698af5f40511424237&page=${page}`;
-  }
-
-  async function fetchGames(url) {
-    try {
-      const response = await fetch(url || getUrlForPage(currentPage));
-      const data = await response.json();
-      games = data.results.slice(0, 20);
-      nextPageUrl = data.next;
-      prevPageUrl = data.previous;
-    } catch (error) {
-      console.error("Error fetching games:", error);
-    }
-  }
-
-  function navigateToGameDetail(gameId) {
-    localStorage.setItem("currentPage", currentPage.toString());
-    push(`/game/${gameId}`);
-  }
-
-  function goToNextPage() {
-    if (nextPageUrl) {
-      currentPage++;
-      localStorage.setItem("currentPage", currentPage.toString());
-      fetchGames(nextPageUrl);
-    }
-  }
-
-  function goToPreviousPage() {
-    if (prevPageUrl) {
-      currentPage--;
-      localStorage.setItem("currentPage", currentPage.toString());
-      fetchGames(prevPageUrl);
-    }
-  }
-
-  function goToFirstPage() {
-    currentPage = 1;
-    localStorage.setItem("currentPage", "1");
-    fetchGames();
-  }
-
-  onMount(() => {
-    const savedPage = localStorage.getItem("currentPage");
-    if (savedPage) {
-      currentPage = parseInt(savedPage, 10);
-    }
-    fetchGames();
-  });
+  
 </script>
 
 <main>
-  <h1>Popular Games</h1>
-  <div class="game-preview">
-    <div class="game-grid">
-      {#each games as game}
-        <div class="game-card" on:click={() => navigateToGameDetail(game.id)}>
-          <img src={game.background_image} alt={game.name} />
-          <h2>{game.name}</h2>
-        </div>
-      {/each}
-    </div>
-  </div>
-
-  <div class="pagination-buttons">
-    <button on:click={goToFirstPage}>First</button>
-    <button on:click={goToPreviousPage} disabled={!prevPageUrl}>Previous</button
-    >
-    <button on:click={goToNextPage} disabled={!nextPageUrl}>Next</button>
-  </div>
+  <h1>Hello world</h1>
 </main>
 
 <style>
