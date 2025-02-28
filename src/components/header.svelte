@@ -1,96 +1,10 @@
 <script>
   import { push } from "svelte-spa-router";
 
-  let searchQuery = "";
-  let stores = [];
-  let genres = [];
-  let platforms = [];
-
-  async function fetchData(url, setter) {
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setter(data.results);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  function searchGames(event, type, id) {
-    event.preventDefault();
-
-    if (type === "search" && searchQuery.length > 2 && event.key === "Enter") {
-      push(`/search?q=${encodeURIComponent(searchQuery)}`);
-    } else if (type === "store") {
-      push(`/search?store=${id}`);
-    } else if (type === "genre") {
-      push(`/search?genre=${id}`);
-    } else if (type === "platform") {
-      push(`/search?platform=${id}`);
-    }
-  }
-
-  fetchData(
-    "https://api.rawg.io/api/stores?key=de4d513680fd4e698af5f40511424237",
-    (data) => (stores = data)
-  );
-  fetchData(
-    "https://api.rawg.io/api/genres?key=de4d513680fd4e698af5f40511424237",
-    (data) => (genres = data)
-  );
-  fetchData(
-    "https://api.rawg.io/api/platforms?key=de4d513680fd4e698af5f40511424237",
-    (data) => (platforms = data)
-  );
 </script>
 
 <nav class="nav-top">
-  <input
-    type="text"
-    id="search-bar"
-    placeholder="Search games..."
-    bind:value={searchQuery}
-    on:keyup={(event) => searchGames(event, "search")}
-  />
-
-  <ul id="nav-list">
-    <li class="menu-div">
-      <div class="dropbtn">
-        <button class="home home-btn" on:click={() => push("/")}>Home</button>
-      </div>
-    </li>
-    <li class="menu-div">
-      <button class="dropbtn">Stores</button>
-      <div class="dropdown-content">
-        {#each stores as store}
-          <button on:click={(event) => searchGames(event, "store", store.id)}
-            >{store.name}</button
-          >
-        {/each}
-      </div>
-    </li>
-    <li class="menu-div">
-      <button class="dropbtn">Genres</button>
-      <div class="dropdown-content">
-        {#each genres as genre}
-          <button on:click={(event) => searchGames(event, "genre", genre.id)}
-            >{genre.name}</button
-          >
-        {/each}
-      </div>
-    </li>
-    <li class="menu-div">
-      <button class="dropbtn">Platforms</button>
-      <div class="dropdown-content">
-        {#each platforms as platform}
-          <button
-            on:click={(event) => searchGames(event, "platform", platform.id)}
-            >{platform.name}</button
-          >
-        {/each}
-      </div>
-    </li>
-  </ul>
+  <p>WIP</p>
 </nav>
 
 <style>
