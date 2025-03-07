@@ -4,7 +4,7 @@
 </script>
 
 <nav class="nav-top">
-  <a href="/ExchangeCalculator">ExchangeRate</a>
+  <a href="/#/ExchangeCalculator">ExchangeRate</a>
 </nav>
 
 <style>

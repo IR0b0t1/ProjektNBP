@@ -4,6 +4,7 @@ import ExchangeCalculator from "./routes/ExchangeCalculator.svelte"
 
 export const routes = {
   "/": Home,
-  "*": NotFound,
   "/ExchangeCalculator": ExchangeCalculator,
+  "/NotFound": NotFound,
+  "*": NotFound,
 };
