@@ -22,7 +22,14 @@
 </script>
 
 <main>
-  <h1>Hello world</h1>
   <div>
+    <h1>Strona NBP</h1>
   </div>
 </main>
+
+<style>
+  h1{
+    font-size: 100px;
+    color: white;
+  }
+</style>
