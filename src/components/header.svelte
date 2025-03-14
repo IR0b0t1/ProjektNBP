@@ -3,14 +3,13 @@
 </script>
 
 <nav class="nav-top">
-<p>NBP PROJECT</p>
-  
-
+  <p>NBP PROJECT</p>
   <div class="menu-div">
     <button class="dropbtn">Menu</button>
     <div class="dropdown-content">
       <button on:click={() => push("/")}>Strona Główna</button>
       <button on:click={() => push("/zloto")}>Cena Złota</button>
+      <button on:click={() => push("/ExchangeRate")}>ExchangeRate</button>
     </div>
   </div>
 </nav>
