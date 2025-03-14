@@ -3,6 +3,7 @@
 [Link do API](https://api.nbp.pl/)
 
 Zadania:
+
 - Litewka - Kalkulator walut
-- Maks - Złoto 
+- Maks - Złoto [złoto]()
 - Bartuś - Tabele walut
