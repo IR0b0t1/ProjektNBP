@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
+  // Zmienne
   let tableA = [];
   let tableB = [];
   let amount = 0;
@@ -8,6 +9,7 @@
   let toCurrency = 'EUR';
   let convertedAmount = 0;
 
+  // Dane z API
   onMount(async () => {
     try {
       const [responseA, responseB] = await Promise.all([
@@ -19,6 +21,7 @@
         throw new Error('Network response was not ok');
       }
 
+      // Pobieranie danych z tabeli
       const [tableAData, tableBData] = await Promise.all([
         responseA.json(),
         responseB.json()
@@ -36,6 +39,7 @@
     }
   });
 
+  // Zmiana walut
   function convertCurrency() {
     const fromRate = getRate(fromCurrency);
     const toRate = getRate(toCurrency);
@@ -47,6 +51,7 @@
     }
   }
 
+  // Pobór ratio waluty
   function getRate(currencyCode) {
     return tableA.find(rate => rate.code === currencyCode)?.mid ||
            tableB.find(rate => rate.code === currencyCode)?.mid;
