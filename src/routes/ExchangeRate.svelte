@@ -4,7 +4,7 @@
   let tableA = [];
   let tableB = [];
   let amount = 0;
-  let fromCurrency = 'PLN';
+  let fromCurrency = 'USD';
   let toCurrency = 'EUR';
   let convertedAmount = 0;
 

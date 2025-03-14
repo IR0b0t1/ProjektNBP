@@ -38,9 +38,10 @@
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.3s ease;
     position: fixed;
-    top: 20px;
+    top: 60px;
     left: 20px;
     z-index: 2;
+    width: 210px;
   }
 
   .menu-toggle:hover {
@@ -76,7 +77,7 @@
     font-size: 24px;
     font-weight: bold;
     color: #102C50;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
   }
 
   .menu-div {
@@ -95,6 +96,7 @@
     transition: background-color 0.2s ease, padding-left 0.2s ease;
     border-radius: 5px;
     margin-bottom: 10px;
+    text-align: center;
   }
 
   .menu-div button:hover {
