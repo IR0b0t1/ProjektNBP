@@ -11,18 +11,31 @@
       }
       const tableBData = await response.json();
       if (tableBData.length > 0) {
-        for(let i=0;i<tableBData[0].rates.length;i++){
-          console.log(tableBData[0].rates[i].mid)
-        }
+        tableB = tableBData[0].rates.map(rate => rate.mid);
       }
     } catch (error) {
-      console.error('Error fetching gold prices:', error);
+      console.error('Error fetching exchange rates:', error);
     }
   });
 </script>
 
 <main>
-  <h1>Hello world</h1>
-  <div>
-  </div>
+  <h1>Exchange Rates</h1>
 </main>
+
+<style>
+  main {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to right, #1b2838, #0f1722);
+    color: #dcdcdc;
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    font-size: 36px;
+    color: #66c0f4;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+</style>
