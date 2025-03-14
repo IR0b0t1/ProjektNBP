@@ -1,10 +1,17 @@
 <script>
   import { push } from "svelte-spa-router";
-
 </script>
 
 <nav class="nav-top">
-  <a href="/ExchangeRate" style="color: white;">ExchangeRate</a>
+  <p>NBP PROJECT</p>
+  <div class="menu-div">
+    <button class="dropbtn">Menu</button>
+    <div class="dropdown-content">
+      <button on:click={() => push("/")}>Strona Główna</button>
+      <button on:click={() => push("/zloto")}>Cena Złota</button>
+      <button on:click={() => push("/ExchangeRate")}>ExchangeRate</button>
+    </div>
+  </div>
 </nav>
 
 <style>
@@ -13,8 +20,8 @@
     align-items: center;
     gap: 15px;
     padding: 15px 20px;
-    background-color: #181818;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    background-color:#F9F3E8;
+    box-shadow: 0px 4px 10px rgba(7, 7, 7, 0.3);
   }
 
   #search-bar {
@@ -29,23 +36,16 @@
   }
 
   #search-bar:focus {
-    border-color: #00bcd4;
+    border-color: #587AA5;
     background-color: #333;
   }
 
-  ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-  }
-
   .menu-div {
-    position: relative;
-    display: inline-block;
+    left: 30%;
   }
 
   .dropbtn {
-    background-color: #2c2c2c;
+    background-color:#102C50;
     color: white;
     padding: 12px 18px;
     border: none;
@@ -62,20 +62,6 @@
     transform: scale(1.05);
   }
 
-  .home-btn {
-    width: 100%;
-    height: 100%;
-    display: flex;
-  }
-
-  .home {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .dropbtn:active {
     transform: scale(0.95);
   }
@@ -86,7 +72,7 @@
     background-color: #333;
     min-width: 160px;
     border-radius: 5px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 12px rgba(250, 218, 39, 0.44);
     z-index: 1;
     animation: fadeIn 0.3s ease-out;
   }
@@ -121,10 +107,5 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  .home {
-    width: 100%;
-    height: 100%;
   }
 </style>
