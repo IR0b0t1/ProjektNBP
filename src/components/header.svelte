@@ -9,7 +9,8 @@
     <div class="dropdown-content">
       <button on:click={() => push("/")}>Strona Główna</button>
       <button on:click={() => push("/zloto")}>Cena Złota</button>
-      <button on:click={() => push("/ExchangeRate")}>ExchangeRate</button>
+      <button on:click={() => push("/ExchangeRate")}>Kursy wymiany walut</button>
+      <button on:click={() => push("/Table")}>Tabela</button>
     </div>
   </div>
 </nav>
