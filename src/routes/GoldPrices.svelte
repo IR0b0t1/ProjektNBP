@@ -20,7 +20,9 @@
     let mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
     let yyyy = today.getFullYear();
 
+    // @ts-ignore
     today = `${yyyy}-${mm}-${dd}`;
+    // @ts-ignore
     selectedDate = today; // Set the default value for selectedDate
 
     async function fetchGoldPrices(days) {
@@ -44,6 +46,7 @@
     }
 
     function drawChart() {
+        // @ts-ignore
         const ctx = document.getElementById("goldChart").getContext("2d");
 
         goldData.subscribe((data) => {
@@ -77,6 +80,7 @@
             if (found) {
                 buyPrice.set(found.price);
                 const totalCost = found.price * $goldAmount; // Łączny koszt zakupu
+                // @ts-ignore
                 const currentValue = currentPrice * $goldAmount; // Aktualna wartość
                 profitOrLoss.set((currentValue - totalCost).toFixed(2));
             }
@@ -105,8 +109,10 @@
             buyPrice.set(priceOnDate);
 
             // Ustaw kolor w zależności od wyniku
+            // @ts-ignore
             if (profit > 0) {
                 profitColor.set("green");
+                // @ts-ignore
             } else if (profit < 0) {
                 profitColor.set("red");
             } else {

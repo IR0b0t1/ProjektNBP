@@ -105,7 +105,7 @@
             <canvas id="currencyChart"></canvas>
         </div>
     {:else}
-        <p style="color: whitesmoke">
+        <p class="no-data">
             Brak dodanych walut. Wybierz walutę z listy i kliknij "Dodaj
             walutę".
         </p>
@@ -138,6 +138,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 
     .refresh {
@@ -190,11 +192,14 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition:
+            background-color 0.3s ease,
+            transform 0.3s ease;
     }
 
     button:hover {
         background-color: #4da6e6;
+        transform: scale(1.05);
     }
 
     .chart-container {
@@ -203,10 +208,19 @@
         height: 400px;
         position: relative;
         margin-top: 20px;
+        border: 1px solid #66c0f4;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     canvas {
         width: 100% !important;
         height: 100% !important;
+    }
+
+    .no-data {
+        color: whitesmoke;
+        font-size: 18px;
+        margin-top: 20px;
     }
 </style>
