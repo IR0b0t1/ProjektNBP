@@ -1,8 +1,8 @@
 import Home from "./routes/Home.svelte";
 import NotFound from "./routes/NotFound.svelte";
-import Tabela from "./routes/Table.svelte";
+import Tabela from "./routes/CurrencyTable.svelte";
 import ExchangeRate from "./routes/ExchangeRate.svelte";
-import Zloto from "./routes/Zloto.svelte";
+import Zloto from "./routes/GoldPrices.svelte";
 
 export const routes = {
   "/": Home,

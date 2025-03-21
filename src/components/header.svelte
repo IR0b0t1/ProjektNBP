@@ -1,18 +1,9 @@
 <script>
   import { push } from "svelte-spa-router";
-  let isMenuOpen = false;
-
-  function toggleMenu() {
-    isMenuOpen = !isMenuOpen;
-  }
 </script>
 
-<button class="menu-toggle" on:click={toggleMenu}>
-  Menu
-</button>
-
-<nav class="sidebar" class:open={isMenuOpen}>
-  <p>NBP PROJECT</p>
+<nav class="horizontal-menu">
+  <p>NBP PROJEKT</p>
   <div class="menu-div">
     <button on:click={() => push("/")}>Strona Główna</button>
     <button on:click={() => push("/zloto")}>Cena Złota</button>
@@ -23,105 +14,74 @@
 
 <style>
   body {
-    display: flex;
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
   }
 
-  .menu-toggle {
-    background-color: #102C50;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    position: fixed;
-    top: 60px;
-    left: 20px;
-    z-index: 2;
-    width: 210px;
-  }
-
-  .menu-toggle:hover {
-    background-color: #444;
-    transform: scale(1.05);
-  }
-
-  .menu-toggle:active {
-    transform: scale(0.95);
-  }
-
-  .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #F9F3E8;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: fixed;
-    left: 0;
-    top: 0;
+  .horizontal-menu {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f9f3e8;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
   }
 
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar p {
+  .horizontal-menu p {
     font-size: 24px;
     font-weight: bold;
-    color: #102C50;
-    margin-bottom: 60px;
+    color: #102c50;
+    margin: 0;
   }
 
   .menu-div {
-    width: 100%;
+    display: flex;
+    gap: 10px;
   }
 
   .menu-div button {
-    padding: 10px;
-    display: block;
+    padding: 10px 20px;
     color: white;
-    background-color: #102C50;
+    background-color: #102c50;
     border: none;
-    text-align: left;
-    width: 100%;
     cursor: pointer;
-    transition: background-color 0.2s ease, padding-left 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
     border-radius: 5px;
-    margin-bottom: 10px;
-    text-align: center;
   }
 
   .menu-div button:hover {
     background-color: #444;
-    padding-left: 15px;
+    transform: scale(1.05);
+  }
+
+  .menu-div button:active {
+    transform: scale(0.95);
   }
 
   main {
-    margin-left: 20px;
-    padding: 20px;
-    width: calc(100% - 270px);
-    transition: margin-left 0.3s ease;
-  }
-
-  .sidebar.open ~ main {
-    margin-left: 270px;
+    padding: 80px 20px 20px; /* Adjust top padding to accommodate the fixed menu */
   }
 
   @media (max-width: 768px) {
-    .sidebar {
-      width: 200px;
+    .horizontal-menu {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .sidebar.open ~ main {
-      margin-left: 220px;
+    .menu-div {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .menu-div button {
+      width: 100%;
+      text-align: center;
     }
   }
 </style>
