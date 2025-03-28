@@ -12,6 +12,7 @@
         datasets: [],
     };
 
+    // @ts-ignore
     const defaultCurrencyCodes = [];
 
     const fetchRates = async () => {
@@ -38,6 +39,7 @@
         }
     };
 
+    // @ts-ignore
     const removeCurrency = (code) => {
         customCurrencies = customCurrencies.filter(
             (currency) => currency !== code,
@@ -60,6 +62,7 @@
     };
 
     const drawChart = () => {
+        // @ts-ignore
         const ctx = document.getElementById("currencyChart").getContext("2d");
 
         if (chart) chart.destroy();
