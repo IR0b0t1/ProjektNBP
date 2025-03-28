@@ -6,24 +6,23 @@
     let chart;
     let goldData = writable([]);
     let selectedDate = "";
-    let goldAmount = writable(0); // Ilość złota w gramach
+    let goldAmount = writable(0);
     let buyPrice = writable(null);
     let currentPrice = writable(null);
     let profitOrLoss = writable(null);
     let timeRange = writable(30);
-    let calculatedProfit = writable(null); // Zysk lub strata z obliczeń według daty
-    let profitColor = writable("whitesmoke"); // Kolor tekstu dla zysku lub straty
+    let calculatedProfit = writable(null);
+    let profitColor = writable("whitesmoke");
 
-    // Set today's date in the correct format for the input element
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = today.getFullYear();
 
     // @ts-ignore
     today = `${yyyy}-${mm}-${dd}`;
     // @ts-ignore
-    selectedDate = today; // Set the default value for selectedDate
+    selectedDate = today;
 
     async function fetchGoldPrices(days) {
         const res = await fetch(
@@ -79,9 +78,9 @@
             const found = data.find((d) => d.date === selectedDate);
             if (found) {
                 buyPrice.set(found.price);
-                const totalCost = found.price * $goldAmount; // Łączny koszt zakupu
+                const totalCost = found.price * $goldAmount;
                 // @ts-ignore
-                const currentValue = currentPrice * $goldAmount; // Aktualna wartość
+                const currentValue = currentPrice * $goldAmount;
                 profitOrLoss.set((currentValue - totalCost).toFixed(2));
             }
         });
@@ -102,13 +101,12 @@
 
         if (data.length > 0) {
             const priceOnDate = data[0].cena;
-            const totalCost = priceOnDate * $goldAmount; // Łączny koszt zakupu
-            const currentValue = $currentPrice * $goldAmount; // Aktualna wartość
+            const totalCost = priceOnDate * $goldAmount;
+            const currentValue = $currentPrice * $goldAmount;
             const profit = (currentValue - totalCost).toFixed(2);
             calculatedProfit.set(profit);
             buyPrice.set(priceOnDate);
 
-            // Ustaw kolor w zależności od wyniku
             // @ts-ignore
             if (profit > 0) {
                 profitColor.set("green");
@@ -131,7 +129,7 @@
     }
 
     onMount(() => {
-        updateTimeRange(7); // Fetch gold prices for the last 7 days initially
+        updateTimeRange(7);
     });
 </script>
 
@@ -143,9 +141,10 @@
                 <canvas id="goldChart"></canvas>
             </div>
             <div class="time-range-buttons">
-                <button on:click={() => updateTimeRange(7)}>7 dni</button>
-                <button on:click={() => updateTimeRange(30)}>30 dni</button>
-                <button on:click={() => updateTimeRange(90)}>3 miesiące</button>
+                <button on:click={() => updateTimeRange(7)}>Tydzień</button>
+                <button on:click={() => updateTimeRange(30)}>Miesiąc</button>
+                <button on:click={() => updateTimeRange(90)}>Kwartał</button>
+                <button on:click={() => updateTimeRange(180)}>Pół roku</button>
             </div>
         </div>
         <div class="calculator">

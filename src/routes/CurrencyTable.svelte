@@ -12,9 +12,6 @@
         datasets: [],
     };
 
-    // @ts-ignore
-    const defaultCurrencyCodes = [];
-
     const fetchRates = async () => {
         try {
             const response = await axios.get(
@@ -39,12 +36,11 @@
         }
     };
 
-    // @ts-ignore
     const removeCurrency = (code) => {
         customCurrencies = customCurrencies.filter(
             (currency) => currency !== code,
         );
-        updateChartData();
+        fetchRates();
     };
 
     const updateChartData = (rates = []) => {
@@ -53,7 +49,7 @@
             return {
                 label: `Kurs ${code}`,
                 data: rate ? [rate.mid] : [0],
-                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
                 borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
                 borderWidth: 1,
             };
@@ -62,7 +58,7 @@
     };
 
     const drawChart = () => {
-        // @ts-ignore
+        //@ts-ignore
         const ctx = document.getElementById("currencyChart").getContext("2d");
 
         if (chart) chart.destroy();
@@ -106,6 +102,16 @@
     {#if customCurrencies.length > 0}
         <div class="chart-container">
             <canvas id="currencyChart"></canvas>
+            <div class="currency-list">
+                {#each customCurrencies as code}
+                    <div class="currency-item">
+                        <span>{code}</span>
+                        <button on:click={() => removeCurrency(code)}
+                            >Usuń</button
+                        >
+                    </div>
+                {/each}
+            </div>
         </div>
     {:else}
         <p class="no-data">
@@ -225,5 +231,26 @@
         color: whitesmoke;
         font-size: 18px;
         margin-top: 20px;
+    }
+
+    .currency-list {
+        margin-top: 20px;
+    }
+
+    .currency-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .currency-item span {
+        font-size: 18px;
+        color: #c0c0c0;
+    }
+
+    .currency-item button {
+        padding: 5px 10px;
+        font-size: 14px;
     }
 </style>
