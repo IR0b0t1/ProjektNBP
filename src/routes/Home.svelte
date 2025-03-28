@@ -108,7 +108,4 @@
     font-weight: bold;
     margin-bottom: 20px;
   }
-  img {
-    height: 100%;
-  }
 </style>
