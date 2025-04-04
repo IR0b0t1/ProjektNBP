@@ -9,7 +9,7 @@
     let selectedCurrencyCode = "";
     let customCurrencies = [];
     let chartData = {
-        labels: ["Średnia cena (PLN)"],
+        labels: [],
         datasets: [],
     };
 
@@ -21,58 +21,83 @@
             const rates = response.data[0].rates;
             availableCurrencies = rates.map((rate) => rate.code);
             currencies = rates.map((rate) => rate.currency);
-            updateChartData(rates);
         } catch (error) {
             console.error("Błąd podczas pobierania kursów walut:", error);
         }
     };
 
-    const addCustomCurrency = () => {
+    const addCustomCurrency = async () => {
         if (
             selectedCurrencyCode &&
             !customCurrencies.includes(selectedCurrencyCode)
         ) {
             customCurrencies.push(selectedCurrencyCode);
             selectedCurrencyCode = "";
-            fetchRates();
+            await updateChartData();
         }
     };
 
     const clearChart = () => {
         customCurrencies = [];
-        updateChartData();
+        chartData = { labels: [], datasets: [] };
+        drawChart();
     };
 
-    const updateChartData = (rates = []) => {
-        chartData.datasets = customCurrencies.map((code) => {
-            const rate = rates.find((r) => r.code === code);
-            return {
-                label: `Kurs ${code}`,
-                data: rate ? [rate.mid] : [0],
-                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
-                borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
-                borderWidth: 1,
-            };
-        });
+    const fetchHistoricalData = async (code) => {
+        try {
+            const response = await axios.get(
+                `https://api.nbp.pl/api/exchangerates/rates/A/${code}/last/30?format=json`,
+            );
+            return response.data.rates.map((rate) => ({
+                date: rate.effectiveDate,
+                value: rate.mid,
+            }));
+        } catch (error) {
+            console.error(`Błąd podczas pobierania danych dla ${code}:`, error);
+            return [];
+        }
+    };
+
+    const updateChartData = async () => {
+        const datasets = [];
+        let labels = [];
+
+        for (const code of customCurrencies) {
+            const history = await fetchHistoricalData(code);
+            if (history.length > 0) {
+                if (labels.length === 0) {
+                    labels = history.map((h) => h.date);
+                }
+
+                datasets.push({
+                    label: `Kurs ${code}`,
+                    data: history.map((h) => h.value),
+                    fill: false,
+                    borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`,
+                    tension: 0.3,
+                });
+            }
+        }
+
+        chartData = { labels, datasets };
         drawChart();
     };
 
     const drawChart = () => {
-        //@ts-ignore
+        // @ts-ignore
         const ctx = document.getElementById("currencyChart").getContext("2d");
 
         if (chart) chart.destroy();
 
         chart = new Chart(ctx, {
-            type: "bar",
+            type: "line",
             data: chartData,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
+                    y: { beginAtZero: false },
+                    x: { ticks: { autoSkip: true, maxTicksLimit: 30 } },
                 },
             },
         });
@@ -80,32 +105,30 @@
 
     onMount(() => {
         fetchRates();
-        const interval = setInterval(fetchRates, 3600000);
-        return () => clearInterval(interval);
     });
 </script>
 
 <main>
-    <h1>Kursy walut NBP</h1>
+    <h1>Kursy walut NBP (ostatnie 30 dni)</h1>
 
     <div class="add-currency">
-        <button class="refresh" on:click={fetchRates}>Odśwież kursy</button>
         <select bind:value={selectedCurrencyCode}>
             <option value="" disabled selected>Wybierz walutę</option>
             {#each availableCurrencies as code}
                 <option value={code}>{code}</option>
             {/each}
         </select>
-        <button on:click={addCustomCurrency}>Dodaj walutę</button>
-        <button on:click={clearChart} style="margin-bottom: 0;"
-            >Wyczyść wykres</button
-        >
+        <div class="button-div">
+            <button class="refresh" on:click={fetchRates}>Odśwież kursy</button>
+
+            <button on:click={addCustomCurrency}>Dodaj walutę</button>
+            <button on:click={clearChart}>Wyczyść wykres</button>
+        </div>
     </div>
 
     {#if customCurrencies.length > 0}
         <div class="chart-container">
             <canvas id="currencyChart"></canvas>
-            <div class="currency-list"></div>
         </div>
     {:else}
         <p class="no-data">
@@ -135,8 +158,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(to right, #1b2838, #0f1722);
         height: 100vh;
+        background: linear-gradient(to right, #1b2838, #0f1722);
     }
 
     .add-currency {
@@ -145,17 +168,12 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin-bottom: 40px;
-        margin: 20px;
-        margin-bottom: 0;
+        margin-bottom: 20px;
     }
 
     button {
-        margin: 20px 0;
-    }
-
-    .refresh {
-        margin: 10px;
+        margin: 10px 0;
+        width: 200px;
     }
 
     h1 {
@@ -166,28 +184,15 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    div {
-        margin-bottom: 15px;
-        width: 100%;
-        max-width: 600px;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 5px;
-        color: #c0c0c0;
-        font-size: 18px;
-    }
-
     select {
-        width: 100%;
         padding: 12px;
         font-size: 18px;
         border: 1px solid #66c0f4;
         border-radius: 5px;
         background-color: #1b2838;
         color: white;
-        margin: 20px;
+        margin: 10px;
+        width: 200px;
     }
 
     select:focus {
@@ -207,6 +212,7 @@
         transition:
             background-color 0.3s ease,
             transform 0.3s ease;
+        margin: 20px;
     }
 
     button:hover {
@@ -236,24 +242,9 @@
         margin-top: 20px;
     }
 
-    .currency-list {
-        margin-top: 20px;
-    }
-
-    .currency-item {
+    .button-div {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .currency-item span {
-        font-size: 18px;
-        color: #c0c0c0;
-    }
-
-    .currency-item button {
-        padding: 5px 10px;
-        font-size: 14px;
     }
 </style>
