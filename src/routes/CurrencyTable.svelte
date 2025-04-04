@@ -5,10 +5,11 @@
 
     let chart;
     let availableCurrencies = [];
+    let currencies = [];
     let selectedCurrencyCode = "";
     let customCurrencies = [];
     let chartData = {
-        labels: ["Average Rate"],
+        labels: ["Średnia cena"],
         datasets: [],
     };
 
@@ -19,6 +20,7 @@
             );
             const rates = response.data[0].rates;
             availableCurrencies = rates.map((rate) => rate.code);
+            currencies = rates.map((rate) => rate.currency);
             updateChartData(rates);
         } catch (error) {
             console.error("Błąd podczas pobierania kursów walut:", error);
@@ -95,19 +97,15 @@
             {/each}
         </select>
         <button on:click={addCustomCurrency}>Dodaj walutę</button>
-        <button on:click={clearChart}>Wyczyść wykres</button>
+        <button on:click={clearChart} style="margin-bottom: 0;"
+            >Wyczyść wykres</button
+        >
     </div>
 
     {#if customCurrencies.length > 0}
         <div class="chart-container">
             <canvas id="currencyChart"></canvas>
-            <div class="currency-list">
-                {#each customCurrencies as code}
-                    <div class="currency-item">
-                        <span>{code}</span>
-                    </div>
-                {/each}
-            </div>
+            <div class="currency-list"></div>
         </div>
     {:else}
         <p class="no-data">
@@ -128,6 +126,7 @@
         background: linear-gradient(to right, #1b2838, #0f1722);
         color: white;
         font-family: "Arial", sans-serif;
+        height: 100vh;
     }
 
     main {
@@ -136,6 +135,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: linear-gradient(to right, #1b2838, #0f1722);
+        height: 100vh;
     }
 
     .add-currency {
@@ -144,7 +145,13 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
+        margin: 20px;
+        margin-bottom: 0;
+    }
+
+    button {
+        margin: 20px 0;
     }
 
     .refresh {
@@ -180,7 +187,7 @@
         border-radius: 5px;
         background-color: #1b2838;
         color: white;
-        margin-bottom: 10px;
+        margin: 20px;
     }
 
     select:focus {
