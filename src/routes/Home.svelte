@@ -8,7 +8,10 @@
     <div style="display: flex; flex-wrap: wrap;">
       <p>Strona do analizy cen walut, złota i wymiany</p>
     </div>
-    <img src="/coinlogo.webp" alt="coinlogo" class="rotating-image" />
+    <div style="display: flex;">
+      <img src="/coinlogo.webp" alt="coinlogo" class="rotating-image" />
+      <img src="/coinlogo.webp" alt="coinlogo" class="rotating-image-2" />
+    </div>
   </main>
 </body>
 
@@ -47,13 +50,27 @@
     height: auto;
     animation: rotate 5s linear infinite;
   }
+  .rotating-image-2 {
+    width: auto;
+    height: auto;
+    animation: -rotate 5s linear infinite;
+  }
 
   @keyframes rotate {
     from {
-      transform: rotate(0deg);
+      transform: rotate(0deg) scaleX(-1);
     }
     to {
-      transform: rotate(360deg);
+      transform: rotate(360deg) scaleX(-1);
+    }
+  }
+
+  @keyframes -rotate {
+    from {
+      transform: rotate(360deg) scaleX(1);
+    }
+    to {
+      transform: rotate(0deg) scaleX(1);
     }
   }
 </style>
