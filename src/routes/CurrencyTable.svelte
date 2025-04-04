@@ -36,11 +36,9 @@
         }
     };
 
-    const removeCurrency = (code) => {
-        customCurrencies = customCurrencies.filter(
-            (currency) => currency !== code,
-        );
-        fetchRates();
+    const clearChart = () => {
+        customCurrencies = [];
+        updateChartData();
     };
 
     const updateChartData = (rates = []) => {
@@ -97,6 +95,7 @@
             {/each}
         </select>
         <button on:click={addCustomCurrency}>Dodaj walutę</button>
+        <button on:click={clearChart}>Wyczyść wykres</button>
     </div>
 
     {#if customCurrencies.length > 0}
@@ -106,9 +105,6 @@
                 {#each customCurrencies as code}
                     <div class="currency-item">
                         <span>{code}</span>
-                        <button on:click={() => removeCurrency(code)}
-                            >Usuń</button
-                        >
                     </div>
                 {/each}
             </div>
