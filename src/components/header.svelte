@@ -93,5 +93,15 @@
     width: 50px;
     height: 50px;
     margin: 0 20px;
+    animation: rotate 5s infinite linear;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
