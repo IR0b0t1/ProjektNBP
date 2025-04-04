@@ -77,6 +77,10 @@
     toCurrency = changer;
     convertCurrency();
   }
+
+  function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  }
 </script>
 
 <main>
@@ -98,7 +102,8 @@
       on:change={convertCurrency}
     >
       {#each allCurrencies as rate}
-        <option value={rate.code}>{rate.currency}</option>
+        <option value={rate.code}>{capitalizeFirstLetter(rate.currency)}</option
+        >
       {/each}
     </select>
   </div>
@@ -106,7 +111,8 @@
     <label for="toCurrency">Do waluty:</label>
     <select id="toCurrency" bind:value={toCurrency} on:change={convertCurrency}>
       {#each allCurrencies as rate}
-        <option value={rate.code}>{rate.currency}</option>
+        <option value={rate.code}>{capitalizeFirstLetter(rate.currency)}</option
+        >
       {/each}
     </select>
   </div>
