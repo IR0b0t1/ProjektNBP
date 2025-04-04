@@ -8,7 +8,7 @@
     <div style="display: flex; flex-wrap: wrap;">
       <p>Strona do analizy cen walut, złota i wymiany</p>
     </div>
-    <img src="/coinlogo.webp" alt="coinlogo" />
+    <img src="/coinlogo.webp" alt="coinlogo" class="rotating-image" />
   </main>
 </body>
 
@@ -40,5 +40,20 @@
     color: #8bc8ec;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  .rotating-image {
+    width: auto;
+    height: auto;
+    animation: rotate 5s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>

@@ -53,6 +53,10 @@
 
   // Currency conversion
   function convertCurrency() {
+    if (amount < 0) {
+      convertedAmount = 0;
+      return;
+    }
     const fromRate = getRate(fromCurrency);
     const toRate = getRate(toCurrency);
 
@@ -88,7 +92,7 @@
   <div>
     <label for="amount">Ilość:</label>
     <input
-      type="number"
+      type="text"
       id="amount"
       bind:value={amount}
       on:input={convertCurrency}
@@ -102,8 +106,9 @@
       on:change={convertCurrency}
     >
       {#each allCurrencies as rate}
-        <option value={rate.code}>{capitalizeFirstLetter(rate.currency)}</option
-        >
+        <option value={rate.code} disabled={rate.code === toCurrency}>
+          {capitalizeFirstLetter(rate.currency)}
+        </option>
       {/each}
     </select>
   </div>
@@ -111,8 +116,9 @@
     <label for="toCurrency">Do waluty:</label>
     <select id="toCurrency" bind:value={toCurrency} on:change={convertCurrency}>
       {#each allCurrencies as rate}
-        <option value={rate.code}>{capitalizeFirstLetter(rate.currency)}</option
-        >
+        <option value={rate.code} disabled={rate.code === fromCurrency}>
+          {capitalizeFirstLetter(rate.currency)}
+        </option>
       {/each}
     </select>
   </div>

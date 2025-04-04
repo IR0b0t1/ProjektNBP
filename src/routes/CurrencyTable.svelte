@@ -9,7 +9,7 @@
     let selectedCurrencyCode = "";
     let customCurrencies = [];
     let chartData = {
-        labels: ["Średnia cena"],
+        labels: ["Średnia cena (PLN)"],
         datasets: [],
     };
 

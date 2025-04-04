@@ -77,6 +77,9 @@
         goldData.subscribe((data) => {
             const found = data.find((d) => d.date === selectedDate);
             if (found) {
+                if (!selectedDate || $goldAmount <= 0) {
+                    return;
+                }
                 buyPrice.set(found.price);
                 const totalCost = found.price * $goldAmount;
                 // @ts-ignore
@@ -88,7 +91,6 @@
 
     async function calculateProfitByDate() {
         if (!selectedDate || $goldAmount <= 0) {
-            alert("Proszę wybrać datę i wprowadzić ilość złota.");
             return;
         }
         console.log(selectedDate);
