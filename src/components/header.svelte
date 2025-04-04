@@ -3,9 +3,13 @@
 </script>
 
 <nav class="horizontal-menu">
-  <p>NBP PROJEKT</p>
+  <div
+    style="display: flex; flex-direction: row; justify-content: center; align-items: center;"
+  >
+    <p>CoinFilp</p>
+    <img src="/coinlogo.webp" alt="ziobro" />
+  </div>
   <div class="menu-div">
-    <button on:click={() => push("/")}>Strona Główna</button>
     <button on:click={() => push("/zloto")}>Cena Złota</button>
     <button on:click={() => push("/ExchangeRate")}>Kursy wymiany walut</button>
     <button on:click={() => push("/Table")}>Tabela</button>
@@ -65,7 +69,7 @@
   }
 
   main {
-    padding: 80px 20px 20px; /* Adjust top padding to accommodate the fixed menu */
+    padding: 80px 20px 20px;
   }
 
   @media (max-width: 768px) {
@@ -83,5 +87,11 @@
       width: 100%;
       text-align: center;
     }
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    margin: 0 20px;
   }
 </style>
